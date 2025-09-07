@@ -14,10 +14,28 @@ final seedColorProvider =
     AsyncNotifierProvider<SeedColorNotifier, Color>(
         SeedColorNotifier.new);
 
-final allSettingsProvider = Provider<AsyncValue<List<dynamic>>>((ref) {
-  return combineSettings([
-    ref.watch(seedColorProvider),
-    ref.watch(themeModeProvider),
-    ref.watch(fontFamilyProvider),
-  ]);
+final allSettingsProvider = Provider<AsyncValue<AppSettings>>((ref) {
+  final seedColor = ref.watch(seedColorProvider);
+  final themeMode = ref.watch(themeModeProvider);
+  final fontFamily = ref.watch(fontFamilyProvider);
+
+  if (seedColor.isLoading || themeMode.isLoading || fontFamily.isLoading) {
+    return const AsyncValue.loading();
+  }
+  if (seedColor.hasError) {
+    return AsyncValue.error(seedColor.error!, seedColor.stackTrace ?? StackTrace.current);
+  }
+  if (themeMode.hasError) {
+    return AsyncValue.error(themeMode.error!, themeMode.stackTrace ?? StackTrace.current);
+  }
+  if (fontFamily.hasError) {
+    return AsyncValue.error(fontFamily.error!, fontFamily.stackTrace ?? StackTrace.current);
+  }
+
+  return AsyncValue.data(AppSettings(
+    seedColor: seedColor.value!,
+    themeMode: themeMode.value!,
+    fontFamily: fontFamily.value!,
+  ));
 });
+
