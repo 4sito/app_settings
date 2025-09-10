@@ -5,4 +5,4 @@ export 'src/theme_provider.dart';
 export 'src/color_provider.dart';
 export 'src/font_provider.dart';
 export 'src/locale_provider.dart';
-export 'src/theme_controller.dart';
+export 'src/app_settings_controller.dart';
