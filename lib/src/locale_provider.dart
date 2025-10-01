@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:app_settings/abstractions/app_settings_notifier.dart';
@@ -8,7 +9,7 @@ class LocaleNotifier extends AppSettingNotifier<Locale, String> {
   String get key => 'locale';
 
   @override
-  Locale get defaultValue => const Locale("en");
+  Locale get defaultValue => Locale(Platform.localeName);
 
   @override
   Locale decode(String value) => Locale(value);

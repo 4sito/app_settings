@@ -1,6 +1,6 @@
 name: app_settings
-description: "A new Flutter package project."
-version: 0.0.3
+description: "App Wide Settings for Flutter Apps."
+version: 0.0.4
 homepage:
 
 environment:

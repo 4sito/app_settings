@@ -1,5 +1,5 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:app_settings/src/theme_controller.dart';
+import 'package:app_settings/src/app_settings_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
