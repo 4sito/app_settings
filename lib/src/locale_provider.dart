@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:app_settings/abstractions/app_settings_notifier.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_io/io.dart';
 
 class LocaleNotifier extends AppSettingNotifier<Locale, String> {
   @override

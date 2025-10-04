@@ -1,6 +1,6 @@
 name: app_settings
 description: "App Wide Settings for Flutter Apps."
-version: 0.0.4
+version: 0.0.5
 homepage:
 
 environment:
@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^3.0.1
   shared_preferences: ^2.3.0
+  universal_io: ^2.2.2
 
 
 dev_dependencies:
