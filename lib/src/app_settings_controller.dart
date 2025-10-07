@@ -1,6 +1,14 @@
 import 'dart:ui';
 import 'package:app_settings/app_settings.dart';
+import 'package:app_settings/src/tour_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+AsyncValue<dynamic> providerError(AsyncValue provider) {
+  return AsyncValue.error(
+    provider.error!,
+    provider.stackTrace ?? StackTrace.current,
+  );
+}
 
 final themeModeProvider =
     AsyncNotifierProvider<ThemeModeNotifier, CupertinoThemeMode>(
@@ -19,39 +27,40 @@ final localeProvider = AsyncNotifierProvider<LocaleNotifier, Locale>(
   LocaleNotifier.new,
 );
 
+final showTourProvider = AsyncNotifierProvider<ShowTourNotifier, bool>(
+  ShowTourNotifier.new,
+);
+
 final allSettingsProvider = Provider<AsyncValue<AppSettings>>((ref) {
   final seedColor = ref.watch(seedColorProvider);
   final themeMode = ref.watch(themeModeProvider);
   final fontFamily = ref.watch(fontFamilyProvider);
   final locale = ref.watch(localeProvider);
+  final showTour = ref.watch(showTourProvider);
 
-  if (seedColor.isLoading || themeMode.isLoading || fontFamily.isLoading || locale.isLoading) {
+  if (seedColor.isLoading ||
+      themeMode.isLoading ||
+      fontFamily.isLoading ||
+      locale.isLoading ||
+      showTour.isLoading) {
     return const AsyncValue.loading();
   }
   if (seedColor.hasError) {
-    return AsyncValue.error(
-      seedColor.error!,
-      seedColor.stackTrace ?? StackTrace.current,
-    );
+    providerError(seedColor);
   }
   if (themeMode.hasError) {
-    return AsyncValue.error(
-      themeMode.error!,
-      themeMode.stackTrace ?? StackTrace.current,
-    );
+    providerError(themeMode);
   }
   if (fontFamily.hasError) {
-    return AsyncValue.error(
-      fontFamily.error!,
-      fontFamily.stackTrace ?? StackTrace.current,
-    );
+    providerError(fontFamily);
   }
 
   if (locale.hasError) {
-    return AsyncValue.error(
-      locale.error!,
-      locale.stackTrace ?? StackTrace.current,
-    );
+    providerError(locale);
+  }
+
+  if (showTour.hasError) {
+    providerError(showTour);
   }
 
   return AsyncValue.data(
@@ -60,6 +69,7 @@ final allSettingsProvider = Provider<AsyncValue<AppSettings>>((ref) {
       themeMode: themeMode.value!,
       fontFamily: fontFamily.value!,
       locale: locale.value!,
+      showTour: showTour.value!,
     ),
   );
 });

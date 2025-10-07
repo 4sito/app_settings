@@ -7,11 +7,13 @@ class AppSettings {
   final CupertinoThemeMode themeMode;
   final String fontFamily;
   final Locale locale;
+  final bool showTour;
 
   AppSettings({
     required this.seedColor,
     required this.themeMode,
     required this.fontFamily,
     required this.locale,
+    required this.showTour,
   });
 }
